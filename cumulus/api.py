@@ -2,10 +2,12 @@ from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.api import Api
+from tastypie.validation import FormValidation
 from cumulus.models import Host, Key, Datum
 from cumulus.paginator import CumulusPaginator
 from cumulus.authentication import RemoteUserAuthentication
 from cumulus.authorization import HostAuthorization, KeyAuthorization, DataAuthorization
+from cumulus.forms import HostForm, KeyForm, DatumForm
 
 VERSION = 1
 
@@ -16,6 +18,7 @@ class HostResource(ModelResource):
         authorization = HostAuthorization()
         authentication = RemoteUserAuthentication()
         paginator_class = CumulusPaginator
+        validation = FormValidation(form_class=HostForm)
 
 class KeyResource(ModelResource):
     class Meta:
@@ -24,6 +27,7 @@ class KeyResource(ModelResource):
         authorization = KeyAuthorization()
         authentication = RemoteUserAuthentication()
         paginator_class = CumulusPaginator
+        validation = FormValidation(form_class=KeyForm)
 
 class DatumResource(ModelResource):
     host = fields.ForeignKey(HostResource, 'host')
@@ -35,6 +39,7 @@ class DatumResource(ModelResource):
         authorization = DataAuthorization()
         authentication = RemoteUserAuthentication()
         paginator_class = CumulusPaginator
+        validation = FormValidation(form_class=DatumForm)
 
 v1_api = Api(api_name='v%d' % VERSION)
 v1_api.register(HostResource())
