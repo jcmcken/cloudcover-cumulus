@@ -1,5 +1,3 @@
-#from cumulus.models import User
-#from django.contrib.auth import User
 from django.contrib.auth.middleware import RemoteUserMiddleware
 from django.contrib.auth.backends import RemoteUserBackend
 from django.contrib import auth
