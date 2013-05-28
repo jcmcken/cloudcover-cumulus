@@ -1,7 +1,7 @@
 from django import forms
 
 class HostForm(forms.Form):
-    pass
+    ip = forms.IPAddressField()
 
 class KeyForm(forms.Form):
     pass
