@@ -32,7 +32,7 @@ class Key(TimestampedModel):
       (BOOLEAN, 'Boolean'),
     )
 
-    name = models.CharField(max_length=32, blank=False)
+    name = models.CharField(max_length=32, blank=False, unique=True)
     description = models.TextField(blank=False)
     type = models.CharField(max_length=8, choices=TYPES, blank=False)
 
