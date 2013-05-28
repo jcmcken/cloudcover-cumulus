@@ -4,7 +4,7 @@ class HostAuthorization(Authorization):
     def _auth_obj(self, obj, bundle):
         # hosts are allowed to examine/change their own data
         # and superusers can change any data
-        return obj.name == bundle.request.user.name or \
+        return obj.name == bundle.request.user.username or \
             bundle.request.user.is_superuser
 
     def _auth_objs(self, object_list, bundle):
@@ -47,7 +47,7 @@ class KeyAuthorization(Authorization):
 
 class DataAuthorization(Authorization):
     def _auth_obj(self, obj, bundle):
-        return obj.host.name == bundle.request.user.name or \
+        return obj.host.name == bundle.request.user.username or \
             bundle.request.user.is_superuser
 
     def _auth_objs(self, object_list, bundle):

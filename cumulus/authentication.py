@@ -5,7 +5,7 @@ LOG = logging.getLogger(__name__)
 
 class RemoteUserAuthentication(Authentication):
     def get_identifier(self, request):
-        return request.user.name
+        return request.user.username
 
     def is_authenticated(self, request, **kwargs):
         # trust user passed from webserver, if there is one
