@@ -4,8 +4,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 
 class GroupEnabledRemoteUserBackend(RemoteUserBackend):
-    def authenticate(self, remote_user, remote_groups):
-        user = super(GroupEnabledRemoteUserBackend, self).authenticate(remote_user)
+    def authenticate(self, user, remote_groups):
         user.remote_groups = remote_groups
         user.is_superuser = self._is_superuser(user)
         user.is_staff = self._is_staff(user)
