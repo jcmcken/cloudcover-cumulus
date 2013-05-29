@@ -45,7 +45,7 @@ class KeyResource(CumulusResource):
         paginator_class = CumulusPaginator
         validation = ModelFormValidation(form_class=KeyForm)
 
-class DatumResource(ModelResource):
+class DatumResource(CumulusResource):
     host = fields.ForeignKey(HostResource, 'host')
     key = fields.ForeignKey(KeyResource, 'key')
 
