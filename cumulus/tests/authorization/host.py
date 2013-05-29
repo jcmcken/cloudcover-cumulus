@@ -13,6 +13,11 @@ class HostAuthorizationTest(ResourceTestCase):
         self.list_url = '/api/v1/host'
         self.superuser = 'admin'
         self.fakeuser = 'fakeuser'
+        self.newserver = 'newserver'
+        self.post_data = {
+          'name': self.newserver,
+          'ip': '10.0.0.1',
+        }
         settings.CUMULUS_SUPERUSERS = [self.superuser]
 
     def tearDown(self):
@@ -68,3 +73,29 @@ class HostAuthorizationTest(ResourceTestCase):
         self.assertHttpOK(result)
         data = self.deserialize(result)
         self.assertTrue(len(data['objects']) == 2)
+
+    def _post(self, **kwargs):
+        return self.api_client.post(self.list_url, format='json', data=self.post_data,
+            **kwargs)
+
+    # POST one, no user
+    def test_post_unauthorized_no_user(self):
+        self.assertHttpUnauthorized(self._post())
+
+    # POST one, unauthed user
+    def test_post_unauthorized_user(self):
+        self.assertHttpUnauthorized(
+          self._post(HTTP_REMOTE_USER=self.fakeuser)
+        )
+   
+    # POST one, authed user 
+    def test_server_post_authorized(self):
+        self.assertHttpCreated(
+          self._post(HTTP_REMOTE_USER=self.newserver)
+        )
+
+    # POST one, superuser
+    def test_superuser_post_authorized(self):
+        self.assertHttpCreated(
+          self._post(HTTP_REMOTE_USER=self.superuser)
+        )
