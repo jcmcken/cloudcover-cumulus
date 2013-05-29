@@ -12,7 +12,22 @@ from cumulus.validation import ModelFormValidation
 
 VERSION = 1
 
-class HostResource(ModelResource):
+
+class CumulusResource(ModelResource):
+    def obj_create(self, bundle, **kwargs):
+        """
+        Hack to get around ``https://github.com/toastdriven/django-tastypie/issues/854``
+        """
+        bundle.obj = self._meta.object_class()
+
+        for key, value in kwargs.items():
+            setattr(bundle.obj, key, value)
+
+        bundle = self.full_hydrate(bundle)
+        self.authorized_create_detail(self.get_object_list(bundle.request), bundle)
+        return self.save(bundle)
+
+class HostResource(CumulusResource):
     class Meta:
         queryset = Host.objects.all()
         resource_name = 'host'
@@ -21,7 +36,7 @@ class HostResource(ModelResource):
         paginator_class = CumulusPaginator
         validation = ModelFormValidation(form_class=HostForm)
 
-class KeyResource(ModelResource):
+class KeyResource(CumulusResource):
     class Meta:
         queryset = Key.objects.all()
         resource_name = 'key'
@@ -40,7 +55,7 @@ class DatumResource(ModelResource):
         authorization = DataAuthorization()
         authentication = RemoteUserAuthentication()
         paginator_class = CumulusPaginator
-        validation = FormValidation(form_class=DatumForm)
+        validation = ModelFormValidation(form_class=DatumForm)
 
 v1_api = Api(api_name='v%d' % VERSION)
 v1_api.register(HostResource())
