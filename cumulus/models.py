@@ -16,11 +16,12 @@ class TimestampedModel(models.Model):
     class Meta:
         abstract = True
 
-    @property
     def is_active(self):
         inactivity = getattr(settings, 'CUMULUS_INACTIVITY_MINIMUM', INACTIVITY_MINIMUM)
         delta = datetime.timedelta(minutes=inactivity)
         return (timezone.now() - self.updated_at) <= delta
+
+    is_active.boolean = True
 
 class Host(TimestampedModel):
     name = models.CharField(max_length=255, blank=False,
