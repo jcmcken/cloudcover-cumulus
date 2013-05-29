@@ -5,15 +5,18 @@ import logging
 LOG = logging.getLogger(__name__)
 
 class TimestampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, blank=False)
-    updated_at = models.DateTimeField(auto_now=True, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, blank=False,
+        verbose_name='Created')
+    updated_at = models.DateTimeField(auto_now=True, blank=False,
+        verbose_name='Last Updated')
 
     class Meta:
         abstract = True
 
 class Host(TimestampedModel):
-    name = models.CharField(max_length=255, blank=False)
-    ip = models.IPAddressField(blank=False)
+    name = models.CharField(max_length=255, blank=False,
+        verbose_name='Hostname')
+    ip = models.IPAddressField(blank=False, verbose_name='IP Address')
 
     class Meta:
         unique_together = ('name', 'ip')
@@ -37,7 +40,8 @@ class Key(TimestampedModel):
 
     name = models.CharField(max_length=32, blank=False, unique=True)
     description = models.TextField(blank=False)
-    type = models.CharField(max_length=8, choices=TYPES, blank=False)
+    type = models.CharField(max_length=8, choices=TYPES, blank=False,
+        verbose_name='Data Type')
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.type)
