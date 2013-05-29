@@ -18,6 +18,9 @@ class Host(TimestampedModel):
     class Meta:
         unique_together = ('name', 'ip')
 
+    def __unicode__(self):
+        return "%s (%s)" % (self.name, self.ip)
+
 class Key(TimestampedModel):
     DATETIME = 'datetime'
     STRING = 'string'
@@ -36,6 +39,9 @@ class Key(TimestampedModel):
     description = models.TextField(blank=False)
     type = models.CharField(max_length=8, choices=TYPES, blank=False)
 
+    def __unicode__(self):
+        return "%s (%s)" % (self.name, self.type)
+
 class Datum(TimestampedModel):
     value = models.CharField(max_length=255, blank=False)
     key = models.ForeignKey(Key, blank=False)
@@ -44,3 +50,7 @@ class Datum(TimestampedModel):
     class Meta:
         # each host can only have 1 of each key
         unique_together = ('host', 'key')
+        verbose_name_plural = 'data'
+
+    def __unicode__(self):
+        return "%s,%s=%s" % (self.host.name, self.key.name, self.value)
