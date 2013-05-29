@@ -57,13 +57,14 @@ class HostAuthorizationTest(ResourceTestCase):
     
     # GET many, authed user
     def test_server_get_list_authorized(self):
-        self.assertHttpOK(
-          self.api_client.get(self.list_url, HTTP_REMOTE_USER=self.server)
-        )
+        result = self.api_client.get(self.list_url, HTTP_REMOTE_USER=self.server)
+        self.assertHttpOK(result)
+        data = self.deserialize(result)
+        self.assertTrue(len(data['objects']) == 1)
 
     # GET many, superuser
     def test_superuser_get_list_authorized(self):
         result = self.api_client.get(self.list_url, HTTP_REMOTE_USER=self.superuser)
         self.assertHttpOK(result)
         data = self.deserialize(result)
-        self.assertTrue(bool(data['objects']))
+        self.assertTrue(len(data['objects']) == 2)
