@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
+from cumulus.defaults import INACTIVITY_MINIMUM
+import datetime
 import logging
 
 LOG = logging.getLogger(__name__)
@@ -12,6 +15,12 @@ class TimestampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+    @property
+    def is_active(self):
+        inactivity = getattr(settings, 'CUMULUS_INACTIVITY_MINIMUM', INACTIVITY_MINIMUM)
+        delta = datetime.timedelta(minutes=inactivity)
+        return (timezone.now() - self.updated_at) <= delta
 
 class Host(TimestampedModel):
     name = models.CharField(max_length=255, blank=False,
