@@ -3,7 +3,7 @@ from cumulus.models import Host, Key, Datum
 from django.conf import settings
 
 class HostAuthorizationTest(ResourceTestCase):
-    fixtures = ['test_single.json']
+    fixtures = ['fixtures.json']
 
     def setUp(self):
         super(HostAuthorizationTest, self).setUp()
