@@ -21,6 +21,17 @@
   }
 },
 {
+  "pk": 2, 
+  "model": "cumulus.key", 
+  "fields": {
+    "name": "bar", 
+    "type": "string",
+    "description": "bar",
+    "created_at": "2013-05-28T03:48:11Z", 
+    "updated_at": "2013-05-28T07:01:19Z"
+  }
+},
+{
   "pk": 1, 
   "model": "cumulus.datum", 
   "fields": {
