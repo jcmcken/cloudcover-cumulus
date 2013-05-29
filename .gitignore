@@ -2,3 +2,5 @@
 *.swp
 manage.py
 cloudcover/
+admin/
+grappelli/
