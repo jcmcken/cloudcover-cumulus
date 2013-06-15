@@ -13,10 +13,9 @@ class HostAdmin(admin.ModelAdmin):
 
 class KeyAdmin(admin.ModelAdmin):
     date_hierarchy = 'updated_at'
-    list_display = ('id', 'name', 'type', 'created_at', 'updated_at')
-    list_filter = ('type',)
+    list_display = ('id', 'name', 'created_at', 'updated_at')
     ordering = ('-updated_at',)
-    search_fields = ('name', 'type')
+    search_fields = ('name',)
 
 class DatumAdmin(admin.ModelAdmin):
     date_hierarchy = 'updated_at'
@@ -24,7 +23,7 @@ class DatumAdmin(admin.ModelAdmin):
     list_display_links = ('value',)
     list_select_related = True
     ordering = ('-updated_at',)
-    search_fields = ('value', 'host__name', 'key__type')
+    search_fields = ('value', 'host__name')
 
 admin.site.register(Host, HostAdmin)
 admin.site.register(Key, KeyAdmin)

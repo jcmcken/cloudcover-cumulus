@@ -35,26 +35,11 @@ class Host(TimestampedModel):
         return "%s (%s)" % (self.name, self.ip)
 
 class Key(TimestampedModel):
-    DATETIME = 'datetime'
-    STRING = 'string'
-    FLOAT = 'float'
-    INTEGER = 'integer'
-    BOOLEAN = 'boolean'
-    TYPES = (
-      (DATETIME, 'Datetime'),
-      (STRING, 'String'),
-      (FLOAT, 'Float'),
-      (INTEGER, 'Integer'),
-      (BOOLEAN, 'Boolean'),
-    )
-
     name = models.CharField(max_length=32, blank=False, unique=True)
     description = models.TextField(blank=False)
-    type = models.CharField(max_length=8, choices=TYPES, blank=False,
-        verbose_name='Data Type')
 
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.type)
+        return "%s" % self.name
 
 class Datum(TimestampedModel):
     value = models.CharField(max_length=255, blank=False)

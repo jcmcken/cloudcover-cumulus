@@ -26,9 +26,8 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated_at', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=32)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=32)),
             ('description', self.gf('django.db.models.fields.TextField')()),
-            ('type', self.gf('django.db.models.fields.CharField')(max_length=8)),
         ))
         db.send_create_signal(u'cumulus', ['Key'])
 
@@ -87,8 +86,7 @@ class Migration(SchemaMigration):
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': '8'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '32'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         }
     }

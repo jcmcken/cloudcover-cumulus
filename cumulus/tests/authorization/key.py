@@ -14,7 +14,6 @@ class KeyAuthorizationTest(ResourceTestCase):
         self.fakeuser = 'fakeuser'
         self.post_data = {
           'name': 'bacon',
-          'type': 'string',
           'description': 'Bacon is delicious',
         }
         settings.CUMULUS_SUPERUSERS = [self.superuser]

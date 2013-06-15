@@ -9,7 +9,7 @@ class HostForm(forms.ModelForm):
 class KeyForm(forms.ModelForm):
     class Meta:
         model = Key
-        fields = [ 'name', 'type', 'description' ]
+        fields = [ 'name', 'description' ]
 
 class DatumForm(forms.ModelForm):
     class Meta:
